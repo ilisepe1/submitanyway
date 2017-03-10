@@ -2,7 +2,7 @@
 "readonly" attribute, the way it should have been.
 
 <h3>Description</h3>
-How many times you wanted to make a select box readonly and be able to submit the values?
+How many times you wanted to make a select box (or any other field) readonly and be able to submit the values?
 "disabled" attribute will take you half way there. "readonly" attribute works only for text related fields.
 <br><br>
 It appears that there is a gap in the standard.
