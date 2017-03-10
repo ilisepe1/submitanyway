@@ -1,0 +1,93 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript">
+//filter form elements with same name
+function merge(els) {
+	var ret = [{}];
+	var merged = [];
+	$.each(els, function(i,el){
+		console.log("name=" + el.name + ", type=" + el.type);
+		var type = el.type;
+		var name = el.name;
+		if (merged.indexOf(name) < 0 && (type === "radio" || type === "checkbox")) {
+			merged.push(name);
+			$('input[name="' + name + '"]:checked').each(function() { //.serialize() ?
+				var tmpEl = {"name": name, "value" : this.value};
+				ret.push(tmpEl);
+			});
+		}
+		else if (merged.indexOf(name) < 0 && type === "select-multiple") {
+			merged.push(name);
+			$('select[name="msel-dis2"] :selected').each(function() {
+				var tmpEl = {"name": name, "value" : this.value};
+				ret.push(tmpEl);
+			});
+		}
+		
+	});
+	return ret;
+}
+
+$(document).ready(function() {
+	console.log("foo");
+    $('#form').submit(function(ev) {
+		ev.preventDefault();
+		var id = this.id;
+	      
+		//get values of form elements with data-submitanyway attributes
+		//and add them to form
+		var params = merge($("[data-submitanyway]"));
+		//console.log("params=", params);
+		if (params != null && params.length > 0) {
+			$.each(params, function(i,param){
+				//console.log("adding x-temp: name=" + param.name + ", value=" + param.value);
+			    $('<input />').attr('type', 'hidden')
+				.attr('name', param.name)
+				.attr('value', param.value)
+				.attr('x-temp', null)
+				.appendTo('#' + id);
+			});
+		}
+	
+		this.submit();
+		//TODO: delete hidden x-temp elements if submit was done with ajax
+    });
+});
+</script>
+
+</head>
+
+<body>
+<form id="form" method="post">
+<table>
+	<tr><td>normal</td><td>readonly/disabled</td><td>readonly/disabled with data-submitanyway</td></tr>
+	<tr><td>
+		<input type="text" name="txt"><br>
+		<textarea name="txtar"></textarea><br>
+		<select name="sel"><option>1</option><option>2</option></select><br>
+		<select name="msel" multiple><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><br>
+		<input type="radio" name="rad" value="1">1 <input type="radio" name="rad" value="2">2<br>
+		<input type="checkbox" name="chk" value="1">1 <input type="checkbox" name="chk" value="2">2 <input type="checkbox" name="chk" value="3">3<br>
+	</td><td>
+		<input type="text" name="txt-ro" readonly value="aaa"><br>
+		<textarea name="txtar-ro" readonly>kfre fwrhkfwjkrh fgwkjlfghwjghrgjkwrhgwjghwr gjrwhg rwjgh rwjkghrw gjkhrw grjkwhg wrgh rjgh rwghrw gjkhrw gjkwrh gjkwrh gjkrwh gjkrjkrh fgwkjlfghwjghrgjkwrhgwjghwr gjrwhg rwjgh rwjkghrw gjkhrw grjkwhg wrgh rjgh rwghrw gjkhrw gjkwrh gjkwrh gjkrwh gjkrjkrh fgwkjlfghwjghrgjkwrhgwjghwr gjrwhg rwjgh rwjkghrw gjkhrw grjkwhg wrgh rjgh rwghrw gjkhrw gjkwrh gjkwrh gjkrwh gjkr</textarea><br>
+		<select name="sel-dis" disabled><option>1</option><option>2</option></select><br>
+		<select name="msel-dis" multiple disabled><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select><br>
+		<input type="radio" name="rad-dis" value="1" disabled checked>1 <input type="radio" name="rad-dis" value="2" disabled>2<br>
+		<input type="checkbox" name="chk-dis" value="1" disabled>1 <input type="checkbox" name="chk-dis" value="2" disabled checked>2<br>
+	</td><td>
+		<input type="text" name="txt-ro2" readonly value="aaa"><br>
+		<textarea name="txtar-ro2" readonly>kfre fwrhkfwjkrh fgwkjlfghwjghrgjkwrhgwjghwr gjrwhg rwjgh rwjkghrw gjkhrw grjkwhg wrgh rjgh rwghrw gjkhrw gjkwrh gjkwrh gjkrwh gjkrjkrh fgwkjlfghwjghrgjkwrhgwjghwr gjrwhg rwjgh rwjkghrw gjkhrw grjkwhg wrgh rjgh rwghrw gjkhrw gjkwrh gjkwrh gjkrwh gjkrjkrh fgwkjlfghwjghrgjkwrhgwjghwr gjrwhg rwjgh rwjkghrw gjkhrw grjkwhg wrgh rjgh rwghrw gjkhrw gjkwrh gjkwrh gjkrwh gjkr</textarea><br>
+		<select name="sel-dis2" disabled data-submitanyway><option>1</option><option>2</option></select><br>
+		<select name="msel-dis2" multiple disabled data-submitanyway><option>1</option><option>2</option><option selected>3</option><option>4</option><option selected>5</option></select><br>
+		<input type="radio" name="rad-dis2" value="1" disabled data-submitanyway>1 <input type="radio" name="rad-dis2" value="2" checked disabled data-submitanyway>2<br>
+		<input type="checkbox" name="chk-dis2" value="1" disabled data-submitanyway>1 <input type="checkbox" name="chk-dis2" value="2" disabled checked data-submitanyway>2 <input type="checkbox" name="chk-dis2" value="3" disabled checked data-submitanyway>3<br>
+	</td></tr>
+</table>
+<input type="submit">
+<br>
+check data from "readonly/disabled with data-submitanyway" column will be posted (ie msel-dis2, chk-dis2)
+</form>
+</body>
