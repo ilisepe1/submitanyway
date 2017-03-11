@@ -29,6 +29,11 @@ SubmitAnyway = function() {
 		return ret;
 	}
 	
+	//delete temp hidden x-submitanyway-temp elements
+	var cleanup = function() {
+		$("[x-submitanyway-temp]").remove();
+	}
+	
 	//the main handler
 	var submitanyway = function(selector) {
 		//console.log("inside submitanyway");
@@ -36,8 +41,7 @@ SubmitAnyway = function() {
 			ev.preventDefault();
 			var id = this.id;
 			
-			//delete temp hidden x-submitanyway-temp elements
-			$("[x-submitanyway-temp]").remove();
+			cleanup();
 		      
 			//get values of form elements with data-submitanyway attributes
 			//and add them to form
@@ -59,7 +63,8 @@ SubmitAnyway = function() {
 	}
 	
 	return {
-		"submitanyway" :  submitanyway
+		"submitanyway" :  submitanyway,
+		"cleanup" :  cleanup
 	}
 
 }();
