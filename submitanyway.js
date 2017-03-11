@@ -4,7 +4,7 @@ SubmitAnyway = function() {
 	
 	//filter form elements with same name
 	var merge = function(els) {
-		var ret = [{}];
+		var ret = [];
 		var merged = [];
 		$.each(els, function(i,el){
 			//console.log("name=" + el.name + ", type=" + el.type);
@@ -35,13 +35,15 @@ SubmitAnyway = function() {
 	}
 	
 	//the main handler
-	var submitanyway = function(selector) {
+	var submitanyway = function(selector, opts) {
 		//console.log("inside submitanyway");
 	    $(selector).submit(function(ev) {
 			ev.preventDefault();
 			var id = this.id;
 			
 			cleanup();
+			
+			if (opts == null) opts = {};
 		      
 			//get values of form elements with data-submitanyway attributes
 			//and add them to form
@@ -58,7 +60,8 @@ SubmitAnyway = function() {
 				});
 			}
 		
-			this.submit();
+			if (opts.doSubmit === undefined || opts.doSubmit)
+				this.submit();
 	    });
 	}
 	
