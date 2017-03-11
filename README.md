@@ -13,20 +13,28 @@ If you show your support to this project, who knows, maybe the <a href="https://
 
 <h3>Usage</h3>
 <pre>
+&lt;script src="submitanyway.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+$(document).ready(function() {
+	SubmitAnyway.submitanyway("#form");
+});
+&lt;/script&gt;
+
+&lt;form id="form" method="post"&gt;
 &lt;input type="text" name="txt-ro2" <b>readonly</b> value="aaa"&gt;&lt;br&gt;
 &lt;select name="msel-dis2" multiple <b>disabled data-submitanyway</b>&gt;&lt;option&gt;1&lt;/option&gt;&lt;option&gt;2&lt;/option&gt;&lt;option selected&gt;3&lt;/option&gt;&lt;option&gt;4&lt;/option&gt;&lt;option selected&gt;5&lt;/option&gt;&lt;/select&gt;&lt;br&gt;
+&lt;/form&gt;
 </pre>
 
 <ul>
-<li> For <b>text/textarea</b>, you can <b>use the standard "readonly" attribute</b>. Values will be posted.
-<li> For <b>all the rest fields</b>, just <b>use "disabled" along with "data-submitanyway"</b>.
-<li> Don't forget to use my js code to do this little magic (check out the source).
-<li> JQuery is prerequisite.
+<li> Include the submitanyway.js library (JQuery is also needed).
+<li> Bind it to your form (with document ready).
+<li> For <b>text/textarea</b>, you can <b>use the standard "readonly" attribute</b>. Values will be posted by HTML design.
+<li> For <b>all the rest fields</b>, just <b>use "disabled" along with "data-submitanyway"</b>. Values will be now also posted.
 </ul>
 
 <h3>Notes</h3>
 This is just a draft working version of the project.<br>
-Code lifting will follow for sure:)<br>
 Contribution/comments/suggestions are more than welcomed.<br>
 For now it has been tested only with firefox.
 
