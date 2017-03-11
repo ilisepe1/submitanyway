@@ -3,7 +3,7 @@ SubmitAnyway = window.SubmitAnyway || {};
 SubmitAnyway = function() {
 	
 	//filter form elements with same name
-	merge = function(els) {
+	var merge = function(els) {
 		var ret = [{}];
 		var merged = [];
 		$.each(els, function(i,el){
@@ -30,7 +30,7 @@ SubmitAnyway = function() {
 	}
 	
 	//the main handler
-	submitanyway = function(selector) {
+	var submitanyway = function(selector) {
 		//console.log("inside submitanyway");
 	    $(selector).submit(function(ev) {
 			ev.preventDefault();
