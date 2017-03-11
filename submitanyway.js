@@ -7,7 +7,7 @@ SubmitAnyway = function() {
 		var ret = [{}];
 		var merged = [];
 		$.each(els, function(i,el){
-			console.log("name=" + el.name + ", type=" + el.type);
+			//console.log("name=" + el.name + ", type=" + el.type);
 			var type = el.type;
 			var name = el.name;
 			if (merged.indexOf(name) < 0 && (type === "radio" || type === "checkbox")) {
@@ -17,9 +17,9 @@ SubmitAnyway = function() {
 					ret.push(tmpEl);
 				});
 			}
-			else if (merged.indexOf(name) < 0 && type === "select-multiple") {
+			else if (merged.indexOf(name) < 0 && type === "select-multiple" || type === "select-one") {
 				merged.push(name);
-				$('select[name="msel-dis2"] :selected').each(function() {
+				$('select[name="' + name + '"] :selected').each(function() {
 					var tmpEl = {"name": name, "value" : this.value};
 					ret.push(tmpEl);
 				});
@@ -31,10 +31,13 @@ SubmitAnyway = function() {
 	
 	//the main handler
 	submitanyway = function(selector) {
-		console.log("submitanyway");
+		//console.log("inside submitanyway");
 	    $(selector).submit(function(ev) {
 			ev.preventDefault();
 			var id = this.id;
+			
+			//delete temp hidden x-submitanyway-temp elements
+			$("[x-submitanyway-temp]").remove();
 		      
 			//get values of form elements with data-submitanyway attributes
 			//and add them to form
@@ -46,13 +49,12 @@ SubmitAnyway = function() {
 				    $('<input />').attr('type', 'hidden')
 					.attr('name', param.name)
 					.attr('value', param.value)
-					.attr('x-temp', null)
+					.attr('x-submitanyway-temp', "")
 					.appendTo('#' + id);
 				});
 			}
 		
 			this.submit();
-			//TODO: delete hidden x-temp elements if submit was done with ajax
 	    });
 	}
 	
