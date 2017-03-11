@@ -53,5 +53,3 @@ For now it has been tested only with firefox.
 GPL 2.0
 
 Thank you
-<br>
-Ilias Seperis
