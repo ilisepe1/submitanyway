@@ -50,6 +50,6 @@ Contribution/comments/suggestions are more than welcomed.<br>
 For now it has been tested only with firefox.
 
 <h3>Licence</h3>
-GPL 2.0
+GPL 3.0
 
 Thank you
