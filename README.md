@@ -33,8 +33,19 @@ $(document).ready(function() {
 <li> For <b>all the rest fields</b>, just <b>use "disabled" along with "data-submitanyway"</b>. Values will be now also posted.
 </ul>
 
+<h3>API</h3>
+submitanyway(selector, options): binds submit on the given form (selector) to handle the data-submitanyway
+<ul>
+<li>options: {"doSubmit" : true|false}</li>
+	<ul>
+		<li><b>true (default):</b> Will also submit the data for you
+		<li><b>false:</b> Just prepares the form (so it's ready to do your custom submit)<br>
+		Depending on your needs, you may have to call the cleanup() after your submit.
+	</ul>
+</ul>
+cleanup(): Deletes the temp hidden elements (you should call it, if needed, only if you choose to implement your own submit method). Normally submitanyway() cleans up before doing anything else.
+
 <h3>Notes</h3>
-This is just a draft working version of the project.<br>
 Contribution/comments/suggestions are more than welcomed.<br>
 For now it has been tested only with firefox.
 
